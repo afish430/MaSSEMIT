@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="MassEMIT" />
+        <meta name="author" content="Arthur Fisher" />
+        <title>MaSSEMIT - Massachusetts Split-Screen Emission Mapping and Information Tool</title>
+        <link rel="Stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+        <link rel="Stylesheet" href="main.css"/>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    </head>
+
+    <body>
+ 
+        <header>
+            <div id="headerDivMeth">
+                <a href="index.html"><img id="pageTitleMeth" src="images/PageTitle.jpg"/></a>
+            </div>
+        </header>
+
+        <section id="methods">
+
+            <h1>Methodology</h1>
+
+            <h3>Purpose</h3>
+            <p>MaSSEMIT (<em>Massachusetts Split-Screen Emissions Mapping & Information Tool</em>) was developed by <a href="http://www.mygreencanton.net/single_pages/author.html" target="blank">Arthur Fisher</a> for consideration in the
+            <a href="http://www.37billionmilechallenge.org" target="blank">37 Billion Mile Data Challenge</a>. This application is intended to inform
+            transportation planning and policy decisions, with the ultimate goal of reducing greenhouse gas emissions from vehicle use in Massachusetts. Using data provided by the Massachusetts Vehicle Census and other sources, a series of town-level metrics have been calculated dealing with issues such as
+            CO<sub>2</sub> emissions, fuel use, vehicle types, and miles driven. Using the split-screen mapping interface, users can compare patterns between any
+            two of these metrics at a given time, potentially gaining insight into what factors may influence one another,
+            and which communities might best be targeted for improving transportation efficiency and sustainability.</p>
+            
+            <h3>Libraries Used</h3>
+
+                <ul>
+                    <li><a href="http://leafletjs.com/" target="blank"><strong>Leaflet</strong></a>: 
+                     A modern open-source JavaScript library used for interactive mapping.
+                    </li>
+
+                    <li><a href="http://d3js.org/" target="blank"><strong>D3</strong></a>: 
+                    (Data Driven Documents) A JavaScript library for manipulating documents based on data.
+                    </li>
+
+                    <li><a href="http://jquery.com/" target="blank"><strong>jQuery</strong></a>: 
+                    A fast, small, and feature-rich JavaScript library that works across a multitude of browsers.
+                    </li>
+
+                    <li><a href="http://jqueryui.com/" target="blank"><strong>JQuery UI</strong></a>: 
+                    A set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.
+                    </li>
+
+                </ul>
+
+            <h3>Software Used</h3>
+                 
+                 <ul>
+                    <li><strong>ArcGIS</strong>: 
+                     Used for spatial data processing and shapefile creation.
+                    </li>
+
+                    <li><strong>SQL Server 2008</strong>: 
+                     Used for manipulation of large datasets.
+                    </li>
+
+                    <li><strong>Visual Studio 2010</strong>: 
+                    Used for code development.
+                    </li>
+
+                    <li><strong>Excel 2010</strong>: 
+                    Used for data processing and percentile calculations.
+                    </li>
+
+                </ul>
+
+            <h3>Data Sources</h3>
+
+                <ul>
+                    <li><strong><a href="Documentation/VehicleCensusofMA_Documentation_v1.pdf" target="blank">Massachusetts Vehicle Census</a></strong>:
+                    As described by the <a href="http://www.37billionmilechallenge.org" target="blank">37 Billion Mile Data Challenge</a>, the data provided includes:
+                        <ul>
+                            <li>Anonymized information about the age, model, estimated mileage, fuel efficiency, and zip code of passenger and commercial vehicles registered in the state from 2008 to 2011.</li>
+                            <li>A spatial dataset of 250 meter grid cells with statistics on vehicles per household, mileage per vehicle, and greenhouse gas emissions.</li>
+                            <li>A companion package including a wide range of spatial data, including population, businesses, property statistics, and the built environment, for each grid cell (available in the Datathon Treat).</li>
+                            <li>See the complete <a href="Documentation/Vehicle Census_Metadata.pdf" target="blank">Field List</a>.</li>
+                        </ul>
+                    </li> 
+
+                    <li><a href="http://www.mass.gov/anf/research-and-tech/it-serv-and-support/application-serv/office-of-geographic-information-massgis/" target="blank"><strong>MassGIS</strong></a>: 
+                    A statewide database of spatial information for mapping and analysis. Town boundaries and MBTA datasets were obtained from MassGIS.
+                    </li>
+
+                    <li><a href="https://www.census.gov/geo/maps-data/data/tiger-data.html" target="blank"><strong>US Census Bureau</strong></a>: 
+                    Source of 2010 block group data used in Household Income calculation.
+                    </li>
+
+                </ul>
+
+            <h3>Additional Resources</h3>
+                
+                <ul>    
+                    <li><a href="https://www.mapbox.com/" target="blank"><strong>Mapbox</strong></a>: 
+                     Provider of tile basemap layer used in Leaflet mapping.
+                    </li>
+
+                    <li><a href="http://www.mapshaper.org/" target="blank"><strong>MapShaper</strong></a>: 
+                     Used to simplify town boundaries shapefile for faster map display while maintaining topology.
+                    </li>
+
+                    <li><a href="http://ogre.adc4gis.com/" target="blank"><strong>OGRE</strong></a>: 
+                     Used for conversion of simplified towns shapefile to a GeoJSON format for use in mapping.
+                    </li>
+                </ul>
+
+            <h3>Town-Level Metrics</h3>
+            <p>For metrics calculated using the Massachusetts Vehicle Census data, the second quarter of 2010 was used as the reference point, unless otherwise noted below. 
+            This was done to ensure consistency with MAPC's common practice, and to prevent individual vehicles or grid cells from being counted multiple times in statistical calculations.
+            A 2010 Q2 sub-dataset was derived from the 250 meter grid dataset by including only those cells indicating that quarter. A similar sub-dataset was derived from the vehicle history table,
+            and the following additional filters were applied to to minimize double-counting and to make sure only the most accurate records were included: The 'inspection match' field must be true,
+            the percent overlap (a reliability measure) must be over 50%, and the CO<sub>2</sub> equivalent must be greater than zero. 
+            In the metric definitions below, the terms <em>grid data</em> and <em>vehicle data</em> will be used as a shorthand referring to the 2010 2nd quarter sub-datasets of the provided <em>Vehicle History Table</em> and the <em>250 Meter Grid</em>, respectively.
+            For more information about the original data, see the <a href="Documentation/VehicleCensusofMA_Documentation_v1.pdf" target="blank">Documentation</a> and <a href="Documentation/Vehicle Census_Metadata.pdf" target="blank">Metadata</a>.
+            <em>All town-level metrics are approximations only.</em>
+            </p>
+                <ul id="metricsList">
+                     <li><strong>Average Adjusted Vehicle MPG:</strong>
+                        The <em>Adjusted MPG</em> field in the vehicle data was averaged to the town level.
+                     </li>
+
+                     <li><strong>Average Daily CO<sub>2</sub> Equivalent per Vehicle:</strong>
+                        The <em>co2eqv_day</em> field in the vehicle data was averaged to the town level.
+                     </li>
+
+                     <li><strong>Average Distance (mi) from Public Transport:</strong>
+                        A distance grid was created from all MBTA points (all active bus, subway, and commuter rail stops).
+                        A separate distance grid was calculated from the <em>All RTA Routes</em> shapefile included in the Companion Data package.
+                        The two grids were then combined, taking the minimum values, to create a final distance grid.
+                        Zonal statistics were then used to calculate the average distance value for each town.
+                     </li>
+
+                     <li><strong>Average Fuel Consumed (gal/d) per Vehicle:</strong>
+                        The <em>Daily Fuel Use</em> field in the vehicle data was averaged to the town level.
+                     </li>
+
+                     <li><strong>Average Miles per Day per Household:</strong>
+                        The <em>Household Miles per Day</em> field in the grid data was multiplied by the <em>Household Count</em>
+                        field for each grid cell to estimate the total miles driven for that cell.
+                        These cell values were summed to the town level, then divided by that town's total household count.
+                     </li>
+
+                     <li><strong>Average Monthly Gas Cost per Household:</strong>
+                        The <em>Average Fuel Consumed (gal/d) per Vehicle</em> metric (see above) was multiplied by 30.4 days per month, then multiplied by the
+                        <em>Average Vehicles per Household</em> metric (see below),
+                        then multiplied by $3.55 (This was the average cost per gallon of gasoline in MA at the time of this calculation.
+                        Using the current cost rather than the 2010 cost makes for a better modern-day estimate.)
+                     </li>
+
+                     <li><strong>Average Vehicle Age (Years):</strong>
+                        The <em>Model Year</em> and <em>Inspection Year</em> fields in the vehicle data were averaged to the town level.
+                        The difference between these values is the approximate average vehicle age.
+                     </li>
+
+                     <li><strong>Average Vehicle MSRP:</strong>
+                        The <em>MSRP</em> field in the vehicle data was averaged to the town level.
+                     </li>
+
+                     <li><strong>Average Vehicles per Household:</strong>
+                        The <em>Passenger Vehicles</em> field in the grid data was summed to the town level, then divided by the total number of households in that town.
+                     </li>
+
+                     <li><strong>Count of Commercial Vehicles:</strong>
+                        The <em>Commercial Vehicles</em> field in the grid data was summed to the town level.
+                     </li>
+
+                     <li><strong>Count of Households:</strong>
+                        The <em>Households, 2010</em> field in the grid data was summed to the town level.
+                     </li>
+
+                     <li><strong>Count of Passenger Vehicles:</strong>
+                        The <em>Passenger Vehicles</em> field in the grid data was summed to the town level.
+                     </li>
+
+                     <li><strong>Count of Total Vehicles:</strong>
+                        The <em>Total Vehicles</em> field in the grid data was summed to the town level.
+                     </li>
+
+                     <li><strong>Count of ZipCar Members:</strong>
+                        The <em>zcar_mem</em> field in the Companion Package's <em>zipcar_data</em> speadsheet was joined to a ZIP codes layer.
+                        ZIP codes were then spatially joined to a towns layer to calculate the total count of members per town.
+                     </li>
+
+                     <li><strong>Hybrid Vehicles per Household:</strong>
+                        The <em>Hybrid</em> field in the vehicle data was summed to the town level.
+                     </li>
+
+                     <li><strong>Median Household Income, 2010:</strong>
+                        An average of 2010 median household incomes was taken for each town from the US Census Block Groups dataset.
+                     </li>
+
+                     <li><strong>Total Daily CO<sub>2</sub> Equivalent:</strong>
+                        The <em>CO<sub>2</sub> per Day, Passenger</em> field in the vehicle data was summed to the town level.
+                     </li>
+
+                     <li><strong>Mileage Proportions (Pie Chart):</strong>
+                        <em>Mileage</em> here refers to estimates of vehicle miles driven per day, <em>NOT</em> mileage in the sense of fuel economy.
+                        The grid data includes several count fields categorizing vehicles by their estimated mileage per day (<em>Low Mileage Vehicles</em>, <em>Medium-Low Mileage Vehicles</em>, etc).
+                        Each of these counts was summed to the town level, and relative proportions of each were calculated by dividing each count by the total count. 
+                     </li>
+                </ul>
+
+        </section>
+
+    </body>
+</html>

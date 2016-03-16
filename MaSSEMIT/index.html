@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="MassEMIT" />
+        <meta name="author" content="Arthur Fisher" />
+        <title>MaSSEMIT - Massachusetts Split-Screen Emission Mapping and Information Tool</title>
+        <link rel="Stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+        <link rel="Stylesheet" href="main.css"/>
+        <link rel="shortcut icon" href="images/favicon.ico"/>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+        <script type="text/javascript" src="L.Map.Sync.js"></script>
+        <script type="text/javascript" src="GeoJSON/townsData.js"></script>		
+     	<script type="text/JavaScript" src="projectScript.js"></script>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+          ga('create', 'UA-50110442-1', 'massemit.org');
+          ga('send', 'pageview');       
+        </script>
+    </head>
+
+    <body>
+ 
+        <header>
+            <div id="headerDiv">
+                <img id="pageTitle" src="images/PageTitle.jpg"/>
+                    <ul id="cornerLinks">
+                        <li><a href="#" id="aboutLink">About</a></li>
+                        <li><a href="methodology.html" target="blank">Methodology</a></li>
+                    </ul>
+            </div>
+        </header>
+
+        <section>
+
+            <!--MAPS-->
+            <div id="mapsDiv">
+
+                <!--LEFT MAP-->
+                <div id= "leftMapContainer">
+                    <div class="mapClass" id= "leftMap"></div>
+                    <select id="ddlLeft">
+                        <option value='pAvMPG' selected='selected'>Avg. Adjusted Vehicle MPG</option>
+                        <option value='pAvCO2Veh' >Avg. Daily CO2 Equiv. per Vehicle</option>
+                        <option value='pDistPubTr'>Avg. Distance (mi) from Public Transport</option>
+                        <option value='pAvGalpd' >Avg. Fuel Consumed (gal/d) per Vehicle</option>
+                        <option value='pHHmiDayP' >Avg. Miles per Day per Household</option>
+                        <option value='pAvGasHHpM' >Avg. Monthly Gas Cost /Household</option>
+                        <option value='pAvCarAge' >Avg. Vehicle Age (Yrs)</option>
+                        <option value='pAvMSRP' >Avg. Vehicle MSRP</option>
+                        <option value='pVehHH' >Avg. Vehicles per Household</option>
+                        <option value='pComVeh' >Count of Commercial Vehicles</option>
+                        <option value='pHHCnt' >Count of Households</option>
+                        <option value='pPasVeh' >Count of Passenger Vehicles</option>
+                        <option value='pTotVeh' >Count of Total Vehicles</option>
+                        <option value='pZipCarCnt' >Count of ZipCar Members</option>
+                        <option value='pHybHH' >Hybrid Vehicles per Household</option>
+                        <option value='pHHInc' >Median Household Income, 2010</option>
+                        <option value='pCO2pd' >Total Daily CO2 Equiv.</option>
+                    </select>
+                    <div class="mapLabel" id="leftLabel"></div>
+                </div>
+
+               <!--RIGHT MAP-->
+               <div id= "rightMapContainer">
+                    <div class="mapClass" id= "rightMap"></div>
+                    <select id="ddlRight">
+                        <option value='pAvMPG'>Avg. Adjusted Vehicle MPG</option>
+                        <option value='pAvCO2Veh' selected='selected'>Avg. Daily CO2 Equiv. per Vehicle</option>
+                        <option value='pDistPubTr'>Avg. Distance (mi) from Public Transport</option>
+                        <option value='pAvGalpd' >Avg. Fuel Consumed (gal/d) per Vehicle</option>
+                        <option value='pHHmiDayP'>Avg. Miles per Day per Household</option>
+                        <option value='pAvGasHHpM' >Avg. Monthly Gas Cost /Household</option>
+                        <option value='pAvCarAge' >Avg. Vehicle Age (Yrs)</option>
+                        <option value='pAvMSRP' >Avg. Vehicle MSRP</option>
+                        <option value='pVehHH' >Avg. Vehicles per Household</option>
+                        <option value='pComVeh' >Count of Commercial Vehicles</option>
+                        <option value='pHHCnt' >Count of Households</option>
+                        <option value='pPasVeh' >Count of Passenger Vehicles</option>
+                        <option value='pTotVeh' >Count of Total Vehicles</option>
+                        <option value='pZipCarCnt' >Count of ZipCar Members</option>
+                        <option value='pHybHH' >Hybrid Vehicles per Household</option>
+                        <option value='pHHInc' >Median Household Income, 2010</option>
+                        <option value='pCO2pd' >Total Daily CO2 Equiv.</option>>
+                    </select>
+                    <div class="mapLabel" id="rightLabel"></div>
+                </div>
+
+            </div> <!--end mapsDiv-->
+
+            <!--CHARTS-->
+            <div id="chartsDiv">
+               <div id="barDiv">
+					<h2 id = "townName">Click a town on either map, or choose from list:</h2>
+					<div id="spacer" style="display: inline"></div>
+					<select class='ddlTowns'>
+						<option value='null'>Choose a town</option>
+					</select>			
+                    <div id="tooltip" class="hidden">
+			             <p><strong id="category"></strong></p>
+			             <p>Value: <span id="value"></span></p>
+                         <p>Percentile: <span id="percentile"></span>%</p>
+		            </div> 
+                    <svg id="barGraphSVG" width="1100" height="160">
+                    </svg>
+              </div>
+              <div id="pieDiv">
+                    <h5 id = "mileageTitle">Mileage Proportions</h5>
+                    <h6>(by vehicle miles driven)</h6>
+                    <svg id="pieGraphSVG" width="175" height="150">                       
+                    </svg>
+              </div>
+
+            </div> <!--end chartsDiv-->
+        </section>
+
+       <!-- ABOUT DIALOG-->
+        <div id="aboutDialog" title="About MaSSEMIT">
+
+            <p>MaSSEMIT (<em>Massachusetts Split-Screen Emissions Mapping & Information Tool</em>) was developed for consideration in the
+            <a href="http://www.37billionmilechallenge.org" target="blank">37 Billion Mile Data Challenge</a>. This application is intended to inform
+            transportation planning and policy decisions, with the ultimate goal of reducing greenhouse gas emissions from vehicle use in Massachusetts.</p>
+            
+            <p>Using data provided by the Massachusetts Vehicle Census and other sources, a series of town-level metrics have been calculated dealing with issues such as
+            CO<sub>2</sub> emissions, fuel use, vehicle types, and miles driven. Through the split-screen mapping interface, users can view any
+            two of these metrics side-by-side, observing patterns and potentially gaining insight into what factors may influence one another.
+            In this way, MaSSEMIT helps policymakers make decisions as to which communities might best be targeted for improving transportation efficiency and sustainability.</p>
+            <p id="aboutBottom">For more information, see the <a href="methodology.html" target="blank">Methodology</a> page.</p>
+        </div>
+
+
+    </body>
+</html>

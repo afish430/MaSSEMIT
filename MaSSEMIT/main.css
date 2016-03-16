@@ -1,0 +1,338 @@
+
+html
+{
+ background-color: #FFFFFF;
+ height: 100%;
+}
+
+body{
+ margin:0; 
+ padding:0; 
+ height:100%; 
+ font-family: Century Gothic;
+}
+
+header
+{
+  height:12%;
+}
+
+#headerDiv, #headerDivMeth
+{
+  height: 100%;
+  width: 100%;
+}
+
+#headerDivMeth img
+{
+ border: none;   
+}
+
+#pageTitle, #pageTitleMeth
+{
+ max-width: 100%;
+ max-height: 100%;
+ padding-left: 20px;  
+}
+
+a:hover
+{
+    color: Orange;    
+}
+
+#cornerLinks
+{
+    float: right;
+    margin: 5px 20px 3px 2px;
+    list-style-type: none; 
+    text-align: right;  
+	font-size: 14px;
+}
+
+#townName
+{
+    display: inline;
+    float: left;
+    margin-left: 50px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+}
+
+#mileageTitle
+{
+    margin-top: 2px;
+    margin-bottom: 3px;
+    text-align: center;
+}
+h6
+{
+    margin-top: 3px;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+#barDiv
+{
+    display: inline;
+    float: left;
+    padding-top: 0;
+}
+
+#pieDiv
+{
+    display: inline;
+    float: left;
+    padding-top: 0;
+}
+
+section
+{
+ height: 87%;   
+}
+
+h1,h2,h3,h4
+{
+ text-align: center; 
+}
+
+.ddlTowns{
+	margin: 6px 10px 0 10px;
+	font-size: 15px;
+	width: 175px;
+	height: 24px;
+	background-color: #dadaeb;
+}
+
+#spacer{
+	float: left;
+	height: 24px;
+}
+
+/*MAPS*/
+
+#mapsDiv
+{
+  padding:0; 
+  height:65%;
+  margin-bottom: 5px;
+}
+
+.mapClass
+{
+	text-align: center;
+	border: 2px solid black;
+}
+
+#leftMapContainer
+{
+	width: 49.5%;
+	height:100%; 
+	float: left;
+	position:relative;
+}
+
+#leftMap
+{
+	width: 100%;
+	height:100%; 
+}
+
+#rightMapContainer
+{
+	width: 49.5%;
+	height:100%; 
+	float: right;
+	position:relative;
+}
+
+#rightMap
+{
+	width: 100%;
+	height:100%; 
+}
+
+#chartsDiv{
+	clear: both;
+	margin: 5px;
+	height: 33%;
+}
+
+#ddlLeft, #ddlRight
+{
+    z-index:100;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 300px;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.mapLabel
+{
+    position:absolute;
+    left:10px;
+    bottom: 10px;
+    z-index:90;
+    min-width: 100px;
+    width: auto;
+    min-height: 25px;
+    height: auto;
+    background-color: White;
+    border: 1px solid black;
+    font-size: 11pt;
+    text-align: center;
+    padding: 5px 10px 3px;
+    margin-right: 10px;
+    display: none;
+}
+
+/*********D3*************/
+
+ .axis path, .axis line{
+		fill: none;
+		stroke: black;
+		shape-rendering: crispEdges;
+ }
+			
+ .axis text{
+		font-family: sans-serif;
+		font-size: 9pt;
+ }
+			
+ .x text {
+		font-family: sans-serif;
+		font-size: 8pt;
+ }
+
+#barGraphSVG rect:hover {
+		fill: yellow;
+ }
+			
+#barGraphSVG
+{
+    clear: both;
+    float: left;
+}
+
+ #pieGraphSVG{
+       margin-left: 20px;
+       float: left;
+ }
+ 
+#tooltip {
+			position: absolute;
+			width: 165px;
+			height: 70px;
+			padding: 10px;
+			background-color: white;
+			-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			pointer-events: none;
+			z-index: 100;
+			border: 1px solid black;
+}
+			
+#tooltip.hidden {
+				display: none;
+}
+			
+#tooltip p {
+				margin: 0;
+				font-family: sans-serif;
+				font-size: 12px;
+				line-height: 20px;
+}
+
+.axisLabel
+{
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+.pieLabel
+{
+    font-size: 7.5pt;
+    z-index: 100;
+    font-weight: bold;
+}
+
+/*********ABOUT DIALOG*********/
+.ui-dialog{
+ background-color: #08519c !important;
+ border-radius: 0 !important;
+}
+
+#aboutDialog
+{
+ font-size: 11pt;
+ line-height: 18pt;
+ background-color: #08519c !important;
+ color: white;
+}
+
+#aboutDialog a
+{
+ outline:none;
+ color: yellow;
+}
+
+#aboutDialog a:hover
+{
+ color: orange;
+}
+
+.ui-dialog
+{
+ z-index: 1000000;
+ box-shadow: 0px 7px 10px black;
+ border: 1px solid black;
+}
+
+.ui-dialog-title
+{
+ text-align: center;
+}
+
+.ui-dialog-titlebar
+{
+  border: 1px solid black;
+}
+
+/*********METHODOLOGY*********/
+
+#methods h2, #methods h3, #methods p, #methods li
+{
+   text-align: left;
+   margin-left: 25px;
+   margin-right: 10px;
+}
+
+#methods p, #methods li
+{
+ font-size: 11pt;
+}
+
+#methods li
+{
+    margin-bottom: 10px;
+}
+
+#methods li li
+{
+    margin-bottom: 5px;
+    font-size: 10pt;
+    margin-left: 5px;
+}
+
+#metricsList
+{
+ margin-bottom: 50px;   
+}
+
+#aboutBottom
+{
+  text-align: center; 
+}
